@@ -32,11 +32,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drake-young/CSC3916_HW2.git"
+    "url": "git+https://github.com/smithadam7/CSC3916_HW3.git"
   },
   "bugs": {
-    "url": "https://github.com/drake-young/CSC3916_HW2/issues"
+    "url": "https://github.com/smithadam7/CSC3916_HW3/issues"
   },
-  "homepage": "https://github.com/drake-young/CSC3916_HW2#readme",
+  "homepage": "https://github.com/smithadam7/CSC3916_HW3#readme",
   "keywords": []
 }
