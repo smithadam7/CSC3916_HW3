@@ -13,20 +13,20 @@ var movieController    =  require( './moviecontroller' );
 require( './mydb.js' );
 
 
-// === CREATE THE APP === //
+// CREATE THE APP 
 var app  =  express( );
 
-// === SET UP BODY PARSER === //
+// SET UP BODY PARSER 
 app.use( bodyParser.json( ) );
 app.use( bodyParser.urlencoded( { extended : false } ) );
 
-// === SET UP PASSPORT === //
+// SET UP PASSPORT 
 app.use( passport.initialize( ) );
 
-// === CREATE ROUTER === //
+// CREATE ROUTER 
 var router  =  express.Router( );
 
-// === CUSTOM FUNCTION TO GENERATE RETURN MESSAGE FOR BAD ROUTES === //
+// CUSTOM FUNCTION TO GENERATE RETURN MESSAGE FOR BAD ROUTES 
 function getBadRouteJSON( req , res , route )
 {
 	res.json(	{	
@@ -35,7 +35,7 @@ function getBadRouteJSON( req , res , route )
 				});
 }
 
-// === CUSTOM FUNCTION TO RETURN JSON OBJECT OF HEADER, KEY, AND BODY OF REQUEST === //
+// CUSTOM FUNCTION TO RETURN JSON OBJECT OF HEADER, KEY, AND BODY OF REQUEST 
 function getJSONObject( req ) 
 {
     var json = {
@@ -53,7 +53,7 @@ function getJSONObject( req )
     return json;
 }
 
-// === CUSTOM FUNCTION TO RETURN JSON OBJECT OF STATUS, MESSAGE, HEADER, QUERY, & ENVIRONMENT KEY FOR /MOVIES === //
+// CUSTOM FUNCTION TO RETURN JSON OBJECT OF STATUS, MESSAGE, HEADER, QUERY, & ENVIRONMENT KEY FOR /MOVIES
 function getMoviesJSONObject( req , msg )
 {
 	var json = {
@@ -75,7 +75,7 @@ function getMoviesJSONObject( req , msg )
 
 
 
-// === ROUTES TO /POST PERFORM A "SMART ECHO" WITH BASIC AUTH === //
+// ROUTES TO /POST PERFORM A "SMART ECHO" WITH BASIC AUTH 
 router.route('/post')
     .post(
 		authController.isAuthenticated, 
@@ -94,7 +94,7 @@ router.route('/post')
 
 		
 		
-// === ROUTES TO /POSTJWT PERFORM AN "ECHO" WITH JWT AUTH === //
+// ROUTES TO /POSTJWT PERFORM AN "ECHO" WITH JWT AUTH 
 router.route( '/postjwt' )
     .post(
 		authJwtController.isAuthenticated, 
@@ -116,11 +116,11 @@ router.route( '/findallusers' )
 
 	
 	
-// === ROUTES TO /SIGNUP === //
+//  ROUTES TO /SIGNUP 
 router.route( '/signup' )
 	// === HANDLE POST REQUESTS === //
 	.post( userController.signUp )
-	// === ALL OTHER ROUTES TO /SIGNUP ARE REJECTED === //
+	// ALL OTHER ROUTES TO /SIGNUP ARE REJECTED 
 	.all(
 		function( req , res )
 		{ 
@@ -129,58 +129,58 @@ router.route( '/signup' )
 
 		
 		
-// === ROUTES TO /SIGNIN === //
+//  ROUTES TO /SIGNIN 
 router.route( '/signin' )
-	// == HANDLE POST REQUESTS === //
+	// HANDLE POST REQUESTS
 	.post( userController.signIn )
-	// === ALL OTHER ROUTES TO /SIGNIN  ARE REJECTED
+	//  ALL OTHER ROUTES TO /SIGNIN  ARE REJECTED
 	.all(
 		function( req , res )
 		{ 
 			getBadRouteJSON( req , res , "/signin" ); 
 		});
 
-// === ROUTES TO /MOVIES === //
+// ROUTES TO /MOVIES 
 router.route( '/movies' )
-	// === HANDLE GET REQUESTS === //
+	// HANDLE GET REQUESTS 
 	.get(
 			authJwtController.isAuthenticated, 
 			movieController.getMovies 
 		)
-	// === HANDLE POST REQUESTS === //
+	// HANDLE POST REQUESTS 
 	.post(
 			authJwtController.isAuthenticated,
 			movieController.postMovie
 		)
-	// === HANDLE PUT REQUESTS === //
+	// HANDLE PUT REQUESTS 
 	.put(
 			authJwtController.isAuthenticated, 
 			movieController.putMovie
 		)
-	// === HANDLE DELETE REQUESTS === //
+	// HANDLE DELETE REQUESTS 
 	.delete(
 			authJwtController.isAuthenticated, 
 			movieController.deleteMovie
 		)
-	// === REJECT ALL OTHER REQUESTS TO /MOVIES === //
+	// REJECT ALL OTHER REQUESTS TO /MOVIES 
 	.all(
 		function( req , res )
 		{ 
 			getBadRouteJSON( req , res , "/movies" );
 		});
 
-// === ATTEMPT TO ROUTE REQUEST === //
+// ATTEMPT TO ROUTE REQUEST
 app.use( '/' , router );
 
-// === IF UNEXPEDTED ROUTE IS SENT, REJECT IT HERE === //
+//  IF UNEXPEDTED ROUTE IS SENT, REJECT IT HERE 
 app.use(
 	function( req , res )
 	{ 
 		getBadRouteJSON( req , res , "this URL path" ); 
 	});
 
-// === LISTEN ON THE ENVIRONMENT PORT OR 8080 === //
+// LISTEN ON THE ENVIRONMENT PORT OR 8080 
 app.listen( process.env.PORT || 8080 );
 
-// === EXPORT APP FOR TESTS === //
-module.exports  =  app; // for testing
+// EXPORT APP FOR TESTS
+module.exports  =  app; 
